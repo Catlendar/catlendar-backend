@@ -9,6 +9,6 @@ public class BoardController {
     @GetMapping("/")
     @ResponseBody
     public String main(){
-        return "test catlendar";
+        return "auto reload";
     }
 }
