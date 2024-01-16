@@ -8,7 +8,7 @@ public class CatlendarApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CatlendarApplication.class, args);
-		System.out.println("첫번째 커밋");
+		System.out.println("테스트 커밋");
 	}
 
 }
