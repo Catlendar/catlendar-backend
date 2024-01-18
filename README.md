@@ -7,7 +7,7 @@
   - 데이터베이스 관리 도구: 디비버
 #### 3. 협업 환경 설정
   - IntelliJ 프로젝트와 GitHub 연동
-  - 협업 관리 도구: 소스트리
+  - 협업 관리 도구: 소스트리, 노션
 #### 4. 애플리케이션 구성 설정
   - application.properties 파일에 데이터베이스 연결, JPA, 코드 자동 재시작 설정 추가
 #### 5. 규칙
@@ -18,9 +18,14 @@
 #### 6. 개발 환경
 ```
   운영체제: Ubuntu, 관리자 권한: root
-  MariaDB: 11.2.2
-  Java: 11
-  Spring Boot: 2.7.5
+  언어: Java
+  DB: MariaDB 11.2.2
+  JDK: 11
+  IDE: IntelliJ
+  Framework:
+  Spring 5.3.23
+  Spring Boot 2.7.5
+  Mybatis 2.2.0
   빌드 도구: Gradle 8.5
   프로젝트 구성 도구: Lombok
 ```
