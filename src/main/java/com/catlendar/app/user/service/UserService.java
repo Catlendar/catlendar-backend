@@ -26,4 +26,28 @@ public class UserService {
         User userInfo = userMapper.getUser(user);
         return userInfo;
     }
+    @Transactional
+    public boolean insertUser(User user){
+        int result = userMapper.insertUser(user);
+        if(result<1){
+            return false;
+        }
+        return true;
+    }
+    @Transactional
+    public boolean updateUser(User user){
+        int result = userMapper.updateUser(user);
+        if(result<1){
+            return false;
+        }
+        return true;
+    }
+    @Transactional
+    public boolean deleteUser(User user){
+        int result = userMapper.deleteUser(user);
+        if(result<1){
+            return false;
+        }
+        return true;
+    }
 }

@@ -17,4 +17,33 @@
         WHERE
             username=#{username};
     </select>
+
+    <insert id="insertUser">
+        INSERT INTO users
+        (
+        USERNAME
+        , EMAIL
+        )
+        VALUES
+        (
+        #{username}
+        , #{email}
+        )
+    </insert>
+
+    <update id="updateUser">
+        UPDATE users
+        SET
+            USERNAME = #{username}
+        WHERE
+            EMAIL = #{email}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE
+        FROM users
+        WHERE
+            EMAIL = #{email}
+    </delete>
+
 </mapper>
