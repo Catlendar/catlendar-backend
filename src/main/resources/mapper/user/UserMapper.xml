@@ -8,8 +8,6 @@
             *
         FROM
             users
-        WHERE
-            EMAIL = 'www';
     </select>
     <select id="getUser" resultType="User">
         SELECT
