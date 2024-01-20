@@ -1,51 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- FATAL > ERROR > WARN > INFO > DEBUG > TRACE -->
-<Configuration>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="LOG_PATH">logs</Property>
+        <Property name="DEFAULT_PATTERN">[%d{yyyy-MM-dd HH:mm:ss.SSS}] %5p ${sys:PID} --- [%15.15t] %-40.40c{1.} : %m%n%xwEx</Property>
+        <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c}{cyan} %clr{:}{faint} %m%n%xwEx</Property>
+        <Property name="TEST_PATTERN">%d %5p [%c] %m%n</Property>
+        <!--        <Property name="COLOR_PATTERN">[%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint}] %clr{%5p} %clr{${sys:PID}}{magenta} %clr{-&#45;&#45;}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}}{cyan} %clr{:}{faint} %m%n%xwEx</Property>-->
+    </Properties>
+
     <Appenders>
-        <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d %5p [%c][%L LINE] %m%n" />
+        <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${COLOR_PATTERN}"/>
         </Console>
-        <!-- Query Loggers 쿼리 과정(파라미터까지) -->
-        <appender name="console-dblog" class="org.apache.log4j.ConsoleAppender">
-            <PatternLayout pattern="%d %5p %m%n" />
-        </appender>
+
+        <RollingFile name ="RollingFileAppender">
+            <FileName>${LOG_PATH}/log4j2.log</FileName>
+            <FilePattern>${LOG_PATH}/log4j2.%d{yyyy-MM-dd-hh-mm}.%i.log.gz</FilePattern>
+            <PatternLayout>
+                <Pattern>${DEFAULT_PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB"/>
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfAccumulatedFileCount exceeds="3"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="java.sql" level="DEBUG" additivity="false">
-            <AppenderRef ref="console" />
+        <!-- Root : 일반적인 로그 정책, 반드시 하나 정의해야함 -->
+
+        <!-- springframework logger -->
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="RollingFileAppender"/>
         </Logger>
-        <Logger name="egovframework" level="DEBUG" additivity="false">
-            <AppenderRef ref="console" />
+
+        <!-- jdbc logger -->
+        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
         </Logger>
-        <Logger name="org.springframework" level="ERROR" additivity="false">
-            <AppenderRef ref="console" />
+
+        <Logger name="jdbc.resultsettable" level="INFO" additivity="false">
+            <AppenderRef ref="ConsoleAppender"/>
+            <AppenderRef ref="RollingFileAppender"/>
         </Logger>
-        <!-- Query Loggers 쿼리(파라미터까지) -->
-        <Logger name="jdbc.sqlonly" additivity="false">
-            <level value="DEBUG"/>
-            <appender-ref ref="console" />
-        </Logger>
-        <!--  SQL문과 해당 SQL을 실행시키는데 수행된 시간 정보(milliseconds)를 포함한다. 필요시 open -->
-        <Logger name="jdbc.sqltiming" level="ERROR" additivity="false">
-            <AppenderRef ref="WARN" />
-        </Logger>
-        <!--  SQL 결과 조회된 데이터의 table을 로그로 남긴다.(빼도됨) -->
-        <Logger name="jdbc.resultsettable" additivity="false">
-            <level value="WARN"/>
-            <appender-ref ref="console"/>
-        </Logger>
-        <!-- ResultSet을 제외한 모든 JDBC 호출 정보를 로그로 남긴다. 많은 양의 로그가 생성되므로 특별히 JDBC 문제를 추적해야 할 필요가 있는 경우를 제외하고는 사용을 권장하지 않는다.-->
-        <Logger name="jdbc.audit" additivity="false">
-            <level value="WARN"/>
-            <appender-ref ref="console"/>
-        </Logger>
-        <!-- ResultSet을 포함한 모든 JDBC 호출 정보를 로그로 남기므로 매우 방대한 양의 로그가 생성된다. -->
-        <Logger name="jdbc.resultset" additivity="false">
-            <level value="WARN"/>
-            <appender-ref ref="console"/>
-        </Logger>
-        <Root level="DEBUG">
-            <AppenderRef ref="console" />
-        </Root>
     </Loggers>
 </Configuration>

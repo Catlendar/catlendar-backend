@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.catlendar.app.user.mapper.UserMapper">
-
     <select id="getUserList" resultType="User">
         SELECT
             *
@@ -21,18 +20,19 @@
     <insert id="insertUser">
         INSERT INTO users
         (
-        USERNAME
-        , EMAIL
+            USERNAME
+            , EMAIL
         )
         VALUES
         (
-        #{username}
-        , #{email}
+            #{username}
+            , #{email}
         )
     </insert>
 
     <update id="updateUser">
-        UPDATE users
+        UPDATE
+            users
         SET
             USERNAME = #{username}
         WHERE
@@ -41,9 +41,9 @@
 
     <delete id="deleteUser">
         DELETE
-        FROM users
+        FROM
+            users
         WHERE
             EMAIL = #{email}
     </delete>
-
 </mapper>
