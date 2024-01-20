@@ -20,29 +20,29 @@ public class UserController {
     private final UserService userService;
 
     // 모든 사용자리스트 가져오기
-    @RequestMapping("/getUserList")
+    @PostMapping("/getUserList")
     public List<User> getUserList() {
         return userService.getUserList();
     }
     // 단일 사용자 가져오기
-    @RequestMapping("/getUser")
-    public User getUser(User user) {
+    @PostMapping("/getUser")
+    public User getUser(@RequestBody User user) {
         return userService.getUser(user);
     }
     // 회원가입
-    @RequestMapping("/signIn")
-    public boolean insertUser(User user) {
+    @PostMapping("/signIn")
+    public boolean insertUser(@RequestBody User user) {
         return userService.insertUser(user);
     }
 
     // 회원정보 수정
-    @RequestMapping("/updateUser")
-    public boolean updateUser(User user) {
+    @PostMapping("/updateUser")
+    public boolean updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
     // 회원 탈퇴
-    @RequestMapping("/deleteUser")
-    public boolean deleteUser(User user) {
+    @PostMapping("/deleteUser")
+    public boolean deleteUser(@RequestBody User user) {
         return userService.deleteUser(user);
     }
 }
