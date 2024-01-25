@@ -1,8 +1,10 @@
 package com.catlendar.app.user.service;
 import com.catlendar.app.user.mapper.UserMapper;
 import com.catlendar.app.user.model.UserInfo;
+import com.catlendar.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,6 +14,14 @@ import java.util.List;
 public class UserService {
     @Autowired
     private final UserMapper userMapper;
+
+    @Value("${jwt.secret}")
+    private String secretKey;
+    private Long expiredMs = 1000*60*60l;
+    public String login(String name, String password){
+        return JwtUtil.createJwt(name, secretKey, expiredMs);
+    }
+
     @Transactional
     public List<UserInfo> getUserList(){
         List<UserInfo> userInfo = userMapper.getUserList();
