@@ -12,6 +12,6 @@ public class CatlendarApplication extends SpringBootServletInitializer {
 		SpringApplication.run(CatlendarApplication.class, args);
 		String dateTime = DateTimeFormatter.ofPattern("MMM dd yyyy, hh:mm:ss a")
 				.format(LocalDateTime.now());
-		System.out.println("successfully compiled the code... "+dateTime);
+		System.out.println("successfully compiled the code..,,,,. "+dateTime);
 	}
 }
