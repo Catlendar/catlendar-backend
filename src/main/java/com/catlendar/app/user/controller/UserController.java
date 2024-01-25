@@ -2,6 +2,8 @@ package com.catlendar.app.user.controller;
 import com.catlendar.app.user.model.UserInfo;
 import com.catlendar.app.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -10,6 +12,16 @@ import java.util.List;
 @RequestMapping(path = {"/user"})
 public class UserController {
     private final UserService userService;
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserInfo userInfo){
+        return ResponseEntity.ok().body(userService.login(userInfo.getName(),""));
+    }
+    @PostMapping("/test")
+    public ResponseEntity<String> test(Authentication authentication){
+        return ResponseEntity.ok().body("사용자명: "+authentication.getName());
+    }
+
     // 모든 사용자리스트 가져오기
     @PostMapping("/getUserList")
     public List<UserInfo> getUserList() {
