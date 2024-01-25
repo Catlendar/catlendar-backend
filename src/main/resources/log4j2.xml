@@ -41,6 +41,8 @@
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="RollingFileAppender"/>
         </Logger>
+        <Logger name="com.catlendar" level="INFO">
+        </Logger>
 
         <Logger name="jdbc.resultsettable" level="INFO" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>

@@ -24,17 +24,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
+                .cors().and()
                 .httpBasic().disable()
                 .csrf().disable()
-                .cors().and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
                 .antMatchers(
                         "/user/login"			//로그인
                 ).permitAll()
-                .antMatchers(HttpMethod.POST,"/user/test").authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .antMatchers(HttpMethod.POST,
+                        "/user/*"
+//                        ,"/user/getUserList"
+                ).authenticated()
                 .and()
                 .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
