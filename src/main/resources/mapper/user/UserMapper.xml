@@ -2,39 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.catlendar.app.user.mapper.UserMapper">
-    <select id="getUserList" resultType="User">
+    <select id="getUserList" resultType="UserInfo">
         SELECT
             *
         FROM
-            users
+            USERINFO
     </select>
-    <select id="getUser" resultType="User">
+    <select id="getUser" resultType="UserInfo">
         SELECT
             *
         FROM
-            users
+            USERINFO
         WHERE
-            username=#{username};
+            name=#{name};
     </select>
 
     <insert id="insertUser">
-        INSERT INTO users
+        INSERT INTO USERINFO
         (
-            USERNAME
+            NAME
             , EMAIL
+            , PASSWORD
         )
         VALUES
         (
-            #{username}
+            #{name}
             , #{email}
+            , #{password}
         )
     </insert>
 
     <update id="updateUser">
         UPDATE
-            users
+            USERINFO
         SET
-            USERNAME = #{username}
+            NAME = #{name}
         WHERE
             EMAIL = #{email}
     </update>
@@ -42,7 +44,7 @@
     <delete id="deleteUser">
         DELETE
         FROM
-            users
+            USERINFO
         WHERE
             EMAIL = #{email}
     </delete>

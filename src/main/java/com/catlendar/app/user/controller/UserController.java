@@ -1,5 +1,5 @@
 package com.catlendar.app.user.controller;
-import com.catlendar.app.user.model.User;
+import com.catlendar.app.user.model.UserInfo;
 import com.catlendar.app.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,27 +12,27 @@ public class UserController {
     private final UserService userService;
     // 모든 사용자리스트 가져오기
     @PostMapping("/getUserList")
-    public List<User> getUserList() {
+    public List<UserInfo> getUserList() {
         return userService.getUserList();
     }
     // 단일 사용자 가져오기
     @PostMapping("/getUser")
-    public User getUser(@RequestBody User user) {
-        return userService.getUser(user);
+    public UserInfo getUser(@RequestBody UserInfo userinfo) {
+        return userService.getUser(userinfo);
     }
     // 회원가입
-    @PostMapping("/signIn")
-    public boolean insertUser(@RequestBody User user) {
-        return userService.insertUser(user);
+    @PostMapping("/signUp")
+    public boolean insertUser(@RequestBody UserInfo userinfo) {
+        return userService.insertUser(userinfo);
     }
     // 회원정보 수정
     @PostMapping("/updateUser")
-    public boolean updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public boolean updateUser(@RequestBody UserInfo userinfo) {
+        return userService.updateUser(userinfo);
     }
     // 회원 탈퇴
     @PostMapping("/deleteUser")
-    public boolean deleteUser(@RequestBody User user) {
-        return userService.deleteUser(user);
+    public boolean deleteUser(@RequestBody UserInfo userinfo) {
+        return userService.deleteUser(userinfo);
     }
 }
