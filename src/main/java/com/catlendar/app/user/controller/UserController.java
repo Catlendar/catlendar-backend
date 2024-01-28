@@ -13,6 +13,7 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserInfo userInfo){
         return ResponseEntity.ok().body(userService.login(userInfo.getName(),""));
@@ -37,6 +38,13 @@ public class UserController {
     public boolean insertUser(@RequestBody UserInfo userinfo) {
         return userService.insertUser(userinfo);
     }
+    // 이메일 중복 체크
+    @PostMapping("/emailVerify")
+    public boolean emailVerify(@RequestBody UserInfo userinfo) {
+        return userService.emailVerify(userinfo);
+    }
+
+
     // 회원정보 수정
     @PostMapping("/updateUser")
     public boolean updateUser(@RequestBody UserInfo userinfo) {

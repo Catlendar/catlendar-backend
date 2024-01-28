@@ -32,6 +32,15 @@
         )
     </insert>
 
+    <select id="emailVerify" resultType="int">
+        SELECT
+            count(*)
+        FROM
+            USERINFO
+        WHERE
+        email=#{email};
+    </select>
+
     <update id="updateUser">
         UPDATE
             USERINFO
