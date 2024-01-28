@@ -10,6 +10,7 @@ public interface UserMapper {
     List<UserInfo> getUserList();
     UserInfo getUser(UserInfo user);
     int insertUser(UserInfo user);
+    int emailVerify(UserInfo user);
     int updateUser(UserInfo user);
     int deleteUser(UserInfo user);
 }

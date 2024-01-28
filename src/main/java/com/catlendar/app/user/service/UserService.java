@@ -41,6 +41,14 @@ public class UserService {
         return true;
     }
     @Transactional
+    public boolean emailVerify(UserInfo user){
+        int result = userMapper.emailVerify(user);
+        if(result==1){
+            return false;
+        }
+        return true;
+    }
+    @Transactional
     public boolean updateUser(UserInfo user){
         int result = userMapper.updateUser(user);
         if(result<1){
