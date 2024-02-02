@@ -33,13 +33,14 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(
                         "/user/login"		//로그인
-                        ,"/user/signIn"			        //회원가입
+                        ,"/user/signUp"			        //회원가입
                         ,"/user/emailVerify"			//이메일 중복체크
                 ).permitAll()
                 .antMatchers(HttpMethod.POST,
                         "/user/*"
 //                        ,"/user/getUserList"
                 ).authenticated()
+
                 .and()
                 .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();

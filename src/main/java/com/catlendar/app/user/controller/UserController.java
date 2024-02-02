@@ -5,22 +5,25 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = {"/user"})
 public class UserController {
     private final UserService userService;
-
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserInfo userInfo){
-        return ResponseEntity.ok().body(userService.login(userInfo.getName(),""));
+        return ResponseEntity.ok().body(userService.login(userInfo.getEmail(),userInfo.getPassword()));
     }
     @PostMapping("/test")
     public ResponseEntity<String> test(Authentication authentication){
-        return ResponseEntity.ok().body("사용자명: "+authentication.getName());
+        return ResponseEntity.ok().body("사용자명: "+authentication);
     }
 
     // 모든 사용자리스트 가져오기
@@ -35,7 +38,7 @@ public class UserController {
     }
     // 회원가입
     @PostMapping("/signUp")
-    public boolean insertUser(@RequestBody UserInfo userinfo) {
+    public String insertUser(@RequestBody UserInfo userinfo) {
         return userService.insertUser(userinfo);
     }
     // 이메일 중복 체크
