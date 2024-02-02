@@ -32,13 +32,23 @@
         )
     </insert>
 
+    <select id="selectEmailInfo" resultType="UserInfo">
+        SELECT
+            *
+        FROM
+            USERINFO
+        WHERE 1=1
+        AND EMAIL = #{email}
+    </select>
+
+
     <select id="emailVerify" resultType="int">
         SELECT
             count(*)
         FROM
             USERINFO
         WHERE
-        email=#{email};
+            email=#{email};
     </select>
 
     <update id="updateUser">

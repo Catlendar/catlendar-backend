@@ -16,8 +16,8 @@ public class JwtUtil {
        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getExpiration().before(new Date());
     }
     public static String createJwt(String name, String secretKey, Long expiredMs){
-        Claims claims = Jwts.claims();
-        claims.put("name", name);
+        Claims claims = Jwts.claims().setSubject(name);
+//        claims.put("name", name);
 
         return Jwts.builder()
                 .setClaims(claims)
