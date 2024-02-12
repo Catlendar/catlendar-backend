@@ -1,4 +1,5 @@
 package com.catlendar.app.user.controller;
+import com.catlendar.app.user.model.PasswordInfo;
 import com.catlendar.app.user.model.UserInfo;
 import com.catlendar.app.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserInfo userInfo){
+    public ResponseEntity<?> login(@RequestBody UserInfo userInfo){
         return ResponseEntity.ok().body(userService.login(userInfo.getEmail(),userInfo.getPassword()));
     }
     @PostMapping("/test")
@@ -31,7 +32,7 @@ public class UserController {
     public List<UserInfo> getUserList() {
         return userService.getUserList();
     }
-    // 단일 사용자 가져오기
+    // 로그인 회원 정보 가져오기
     @PostMapping("/getUser")
     public UserInfo getUser(@RequestBody UserInfo userinfo) {
         return userService.getUser(userinfo);
@@ -43,7 +44,7 @@ public class UserController {
     }
     // 이메일 중복 체크
     @PostMapping("/emailVerify")
-    public boolean emailVerify(@RequestBody UserInfo userinfo) {
+    public String emailVerify(@RequestBody UserInfo userinfo) {
         return userService.emailVerify(userinfo);
     }
 
@@ -53,6 +54,13 @@ public class UserController {
     public boolean updateUser(@RequestBody UserInfo userinfo) {
         return userService.updateUser(userinfo);
     }
+
+    // 비밀번호 변경
+    @PostMapping("/updatePassword")
+    public String updatePassword(@RequestBody PasswordInfo passwordInfo) {
+        return userService.updatePassword(passwordInfo);
+    }
+
     // 회원 탈퇴
     @PostMapping("/deleteUser")
     public boolean deleteUser(@RequestBody UserInfo userinfo) {

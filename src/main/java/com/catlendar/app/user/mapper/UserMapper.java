@@ -1,5 +1,6 @@
 package com.catlendar.app.user.mapper;
 
+import com.catlendar.app.user.model.PasswordInfo;
 import com.catlendar.app.user.model.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,5 +14,8 @@ public interface UserMapper {
     int insertUser(UserInfo user);
     int emailVerify(UserInfo user);
     int updateUser(UserInfo user);
+    PasswordInfo selectPassword(PasswordInfo passwordInfo);
+
+    int updatePassword(PasswordInfo passwordInfo);
     int deleteUser(UserInfo user);
 }
