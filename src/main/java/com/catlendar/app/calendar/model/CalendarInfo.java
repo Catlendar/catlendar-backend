@@ -20,6 +20,5 @@ public class CalendarInfo {
     private String completed;
     private Date createDate;
 
-    private String year;
-    private String month;
+    private String noneDate;
 }
