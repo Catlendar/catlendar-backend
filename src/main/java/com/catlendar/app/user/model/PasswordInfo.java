@@ -11,16 +11,8 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
-    private String userId;
+public class PasswordInfo {
     private String email;
     private String password;
-    private String name;
-    private Integer birthDate;
-    private Integer birthTime;
-    private String calendarType;
-    private String gender;
-    private Date registDate;
-
-    private String token;
+    private String newPassword;
 }

@@ -1,5 +1,6 @@
 package com.catlendar.app.user.service;
 import com.catlendar.app.user.mapper.UserMapper;
+import com.catlendar.app.user.model.PasswordInfo;
 import com.catlendar.app.user.model.UserInfo;
 import com.catlendar.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,10 @@ public class UserService {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private Long expiredMs = 1000*60*60l;
 
-    public String login(String email, String password){
+    //토큰 만료시간 12시간으로 설정
+    private Long expiredMs = 1000*60*60*12l;
+    public Object login(String email, String password){
         // 회원 정보 확인
         UserInfo userInfo = userMapper.selectEmailInfo(email);
         if(ObjectUtils.isEmpty(userInfo)){
@@ -38,7 +40,8 @@ public class UserService {
             return "비밀번호가 일치하지않습니다.";
         }
         else{
-            return JwtUtil.createJwt(userInfo.getEmail(), secretKey, expiredMs);
+        userInfo.setToken(JwtUtil.createJwt(userInfo.getEmail(), secretKey, expiredMs));
+            return userInfo;
         }
     }
 
@@ -58,21 +61,16 @@ public class UserService {
         String encryptPassword = passwordEncoder.encode(user.getPassword());
         // user정보에 암호화한 비밀번호 삽입
         user.setPassword(encryptPassword);
-        // 이메일 중복체크
-        int emailVerifyCheck = userMapper.emailVerify(user);
-        if(emailVerifyCheck==0) {
-            int result = userMapper.insertUser(user);
-            return "회원가입 되었습니다.";
-        }
-        return "중복된 이메일입니다.";
+        int result = userMapper.insertUser(user);
+        return "회원가입 성공";
     }
     @Transactional
-    public boolean emailVerify(UserInfo user){
+    public String emailVerify(UserInfo user){
         int result = userMapper.emailVerify(user);
         if(result==1){
-            return false;
+            return "이미 가입된 이메일 주소 입니다.";
         }
-        return true;
+        return "사용 가능한 이메일 입니다.";
     }
     @Transactional
     public boolean updateUser(UserInfo user){
@@ -82,6 +80,22 @@ public class UserService {
         }
         return true;
     }
+
+    @Transactional
+    public String updatePassword(PasswordInfo passwordInfo){
+        // 기존 비밀번호 가져오기
+        PasswordInfo password = userMapper.selectPassword(passwordInfo);
+        // 입력한 비밀번호와 암호화되어있는 기존 비밀번호가 일치하는지 검증
+        if (!passwordEncoder.matches(passwordInfo.getPassword(), password.getPassword())) {
+            return "기존 비밀번호와 일치하지 않습니다.";
+        }
+        // 새롭게 입력한 비밀번호를 암호화하고 변경
+        String encryptPassword = passwordEncoder.encode(passwordInfo.getNewPassword());
+        passwordInfo.setPassword(encryptPassword);
+        userMapper.updatePassword(passwordInfo);
+        return "비밀번호가 변경되었습니다.";
+    }
+
     @Transactional
     public boolean deleteUser(UserInfo user){
         int result = userMapper.deleteUser(user);

@@ -4,17 +4,29 @@
 <mapper namespace="com.catlendar.app.user.mapper.UserMapper">
     <select id="getUserList" resultType="UserInfo">
         SELECT
-            *
+            NAME
+            , EMAIL
+            , BIRTH_DATE
+            , BIRTH_TIME
+            , CALENDAR_TYPE
+            , GENDER
+            , REGIST_DATE
         FROM
             USERINFO
     </select>
     <select id="getUser" resultType="UserInfo">
         SELECT
-            *
+            NAME
+            , EMAIL
+            , BIRTH_DATE
+            , BIRTH_TIME
+            , CALENDAR_TYPE
+            , GENDER
+            , REGIST_DATE
         FROM
             USERINFO
         WHERE
-            name=#{name};
+            email= #{email};
     </select>
 
     <insert id="insertUser">
@@ -23,12 +35,20 @@
             NAME
             , EMAIL
             , PASSWORD
+            , BIRTH_DATE
+            , BIRTH_TIME
+            , CALENDAR_TYPE
+            , GENDER
         )
         VALUES
         (
             #{name}
             , #{email}
             , #{password}
+            , #{birthDate}
+            , #{birthTime}
+            , #{calendarType}
+            , #{gender}
         )
     </insert>
 
@@ -55,7 +75,29 @@
         UPDATE
             USERINFO
         SET
-            NAME = #{name}
+            NAME            = #{name}
+            , BIRTH_DATE    = #{birthDate}
+            , BIRTH_TIME    = #{birthTime}
+            , CALENDAR_TYPE = #{calendarType}
+            , GENDER        = #{gender}
+        WHERE
+            EMAIL = #{email}
+    </update>
+
+    <select id="selectPassword" resultType="PasswordInfo">
+        SELECT
+            PASSWORD
+        FROM
+            USERINFO
+        WHERE
+            email=#{email};
+    </select>
+
+    <update id="updatePassword">
+        UPDATE
+            USERINFO
+        SET
+            PASSWORD = #{password}
         WHERE
             EMAIL = #{email}
     </update>
