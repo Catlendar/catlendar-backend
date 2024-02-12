@@ -38,7 +38,6 @@ public class SecurityConfig {
                 ).permitAll()
                 .antMatchers(HttpMethod.POST,
                         "/user/*"
-//                        ,"/user/getUserList"
                 ).authenticated()
 
                 .and()

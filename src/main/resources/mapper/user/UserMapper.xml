@@ -4,7 +4,8 @@
 <mapper namespace="com.catlendar.app.user.mapper.UserMapper">
     <select id="getUserList" resultType="UserInfo">
         SELECT
-            NAME
+            USER_ID
+            , NAME
             , EMAIL
             , BIRTH_DATE
             , BIRTH_TIME
@@ -16,7 +17,8 @@
     </select>
     <select id="getUser" resultType="UserInfo">
         SELECT
-            NAME
+            USER_ID
+            , NAME
             , EMAIL
             , BIRTH_DATE
             , BIRTH_TIME
