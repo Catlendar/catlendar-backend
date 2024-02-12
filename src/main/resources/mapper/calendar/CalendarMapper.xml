@@ -14,9 +14,7 @@
         FROM
             CALENDAR
         WHERE
-            DATE_FORMAT(CALENDAR_DATE,'%Y') = #{year}
-        AND
-            DATE_FORMAT(CALENDAR_DATE,'%m') = #{month}
+            CALENDAR_DATE LIKE CONCAT(#{noneDate}, '%')
         AND
             USER_ID = #{userId}
     </select>
