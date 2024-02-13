@@ -27,7 +27,7 @@ public class SecurityConfig {
         @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
-                .cors().configurationSource(corsConfigurationSource())
+                .cors().configurationSource(corsConfigurationSource()).and()
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement()
