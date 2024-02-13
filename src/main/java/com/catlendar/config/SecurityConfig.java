@@ -37,9 +37,8 @@ public class SecurityConfig {
                         ,"/user/emailVerify"			//이메일 중복체크
                 ).permitAll()
                 .antMatchers(HttpMethod.POST,
-                        "/user/*"
+                        "/*/*"
                 ).authenticated()
-
                 .and()
                 .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 .build();
