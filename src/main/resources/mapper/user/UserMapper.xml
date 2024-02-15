@@ -15,6 +15,7 @@
         FROM
             USERINFO
     </select>
+
     <select id="getUser" resultType="UserInfo">
         SELECT
             USER_ID
@@ -54,7 +55,7 @@
         )
     </insert>
 
-    <select id="selectEmailInfo" resultType="UserInfo">
+    <select id="selectEmailInfo" resultType="UserTokenInfo">
         SELECT
             *
         FROM
@@ -62,7 +63,6 @@
         WHERE 1=1
         AND EMAIL = #{email}
     </select>
-
 
     <select id="emailVerify" resultType="int">
         SELECT

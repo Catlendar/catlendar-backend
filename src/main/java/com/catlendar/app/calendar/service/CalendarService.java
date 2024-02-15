@@ -24,20 +24,17 @@ public class CalendarService {
         return specificMonth;
     }
 
-
     @Transactional
     public List<CalendarInfo> getMonth(CalendarInfo calendarInfo){
         List<CalendarInfo> month = calendarMapper.getMonth(calendarInfo);
         return month;
     }
 
-
     @Transactional
     public List<CalendarInfo> getToday(CalendarInfo calendarInfo){
         List<CalendarInfo> today = calendarMapper.getToday(calendarInfo);
         return today;
     }
-
 
     @Transactional
     public String createCalendar(CalendarInfo calendarInfo){
@@ -58,11 +55,22 @@ public class CalendarService {
     }
 
     @Transactional
-    public List<BookmarkInfo> getBookmark(BookmarkInfo bookmarkInfo){
-        List<BookmarkInfo> bookmarkList = calendarMapper.getBookmark(bookmarkInfo);
+    public String completeCalendar(CalendarInfo calendarInfo){
+        calendarMapper.completeCalendar(calendarInfo);
+        return "변경 되었습니다.";
+    }
+
+    @Transactional
+    public List<BookmarkInfo> getBookmarkList(BookmarkInfo bookmarkInfo){
+        List<BookmarkInfo> bookmarkList = calendarMapper.getBookmarkList(bookmarkInfo);
         return bookmarkList;
     }
 
+    @Transactional
+    public BookmarkInfo getBookmark(BookmarkInfo bookmarkInfo){
+        BookmarkInfo bookmark = calendarMapper.getBookmark(bookmarkInfo);
+        return bookmark;
+    }
 
     @Transactional
     public String createBookmark(BookmarkInfo bookmarkInfo){
@@ -70,6 +78,11 @@ public class CalendarService {
         return "즐겨찾기에 추가 되었습니다.";
     }
 
+    @Transactional
+    public String deleteBookmark(BookmarkInfo bookmarkInfo){
+        calendarMapper.deleteBookmark(bookmarkInfo);
+        return "즐겨찾기가 삭제 되었습니다.";
+    }
 
     @Transactional
     public String bookmarkToCalendar(BookmarkInfo bookmarkInfo){

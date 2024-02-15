@@ -1,5 +1,6 @@
 package com.catlendar.app.calendar.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,7 @@ public class CalendarInfo {
     private String completed;
     private Date createDate;
 
-    private String noneDate;
+    // 요청(Request)에서는 이 필드를 무시
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String targetDate;
 }

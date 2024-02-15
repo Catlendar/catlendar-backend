@@ -2,8 +2,10 @@ package com.catlendar.app.user.service;
 import com.catlendar.app.user.mapper.UserMapper;
 import com.catlendar.app.user.model.PasswordInfo;
 import com.catlendar.app.user.model.UserInfo;
+import com.catlendar.app.user.model.UserTokenInfo;
 import com.catlendar.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,11 +29,11 @@ public class UserService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    //토큰 만료시간 12시간으로 설정
-    private Long expiredMs = 1000*60*60*12l;
+    // 토큰 만료시간 72시간으로 설정
+    private Long expiredMs = 1000*60*60*72l;
     public Object login(String email, String password){
         // 회원 정보 확인
-        UserInfo userInfo = userMapper.selectEmailInfo(email);
+        UserTokenInfo userInfo = userMapper.selectEmailInfo(email);
         if(ObjectUtils.isEmpty(userInfo)){
             return "존재하지 않는 이메일입니다.";
         }
@@ -50,11 +52,13 @@ public class UserService {
         List<UserInfo> userInfo = userMapper.getUserList();
         return userInfo;
     }
+
     @Transactional
     public UserInfo getUser(UserInfo user){
         UserInfo userInfo = userMapper.getUser(user);
         return userInfo;
     }
+
     @Transactional
     public String insertUser(UserInfo user) {
         // 입력받은 비밀번호 암호화
@@ -64,6 +68,7 @@ public class UserService {
         int result = userMapper.insertUser(user);
         return "회원가입 성공";
     }
+
     @Transactional
     public String emailVerify(UserInfo user){
         int result = userMapper.emailVerify(user);
@@ -72,6 +77,7 @@ public class UserService {
         }
         return "사용 가능한 이메일 입니다.";
     }
+
     @Transactional
     public boolean updateUser(UserInfo user){
         int result = userMapper.updateUser(user);
