@@ -11,20 +11,15 @@ import java.util.List;
 public interface CalendarMapper {
 
     List<CalendarInfo> getSpecificMonth(CalendarInfo calendarInfo);
-
     List<CalendarInfo> getMonth(CalendarInfo calendarInfo);
-
     List<CalendarInfo> getToday(CalendarInfo calendarInfo);
-
     int createCalendar(CalendarInfo calendarInfo);
-
     int updateCalendar(CalendarInfo calendarInfo);
-
     int deleteCalendar(CalendarInfo calendarInfo);
-
-    List<BookmarkInfo> getBookmark(BookmarkInfo bookmarkInfo);
-
+    int completeCalendar(CalendarInfo calendarInfo);
+    List<BookmarkInfo> getBookmarkList(BookmarkInfo bookmarkInfo);
+    BookmarkInfo getBookmark(BookmarkInfo bookmarkInfo);
     int createBookmark(BookmarkInfo bookmarkInfo);
-
+    int deleteBookmark(BookmarkInfo bookmarkInfo);
     int bookmarkToCalendar(BookmarkInfo bookmarkInfo);
 }

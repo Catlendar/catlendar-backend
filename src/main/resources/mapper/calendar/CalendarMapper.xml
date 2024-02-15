@@ -14,9 +14,10 @@
         FROM
             CALENDAR
         WHERE
-            CALENDAR_DATE LIKE CONCAT(#{noneDate}, '%')
+            CALENDAR_DATE LIKE CONCAT(#{targetDate}, '%')
         AND
             USER_ID = #{userId}
+        ORDER BY CALENDAR_DATE ASC
     </select>
 
     <select id="getMonth" resultType="CalendarInfo">
@@ -33,7 +34,8 @@
         WHERE
             USER_ID = #{userId}
         AND
-            DATE_FORMAT(CALENDAR_DATE,'%Y-%m') = DATE_FORMAT(CURDATE(),'%Y-%m');
+            DATE_FORMAT(CALENDAR_DATE,'%Y-%m') = DATE_FORMAT(CURDATE(),'%Y-%m')
+        ORDER BY CALENDAR_DATE ASC
     </select>
 
     <select id="getToday" resultType="CalendarInfo">
@@ -53,7 +55,6 @@
             DATE(CALENDAR_DATE) = CURDATE();
     </select>
 
-
     <insert id="createCalendar">
         INSERT INTO CALENDAR
         (
@@ -64,7 +65,7 @@
         VALUES
         (
             #{userId}
-            , #{calendarDate}
+            , #{targetDate}
             , #{calendarContent}
         )
     </insert>
@@ -90,6 +91,32 @@
             CALENDAR_ID = #{calendarId}
     </delete>
 
+    <update id="completeCalendar">
+        UPDATE
+            CALENDAR
+        SET
+            COMPLETED = case COMPLETED
+            when	'Y' then 'N'
+            when	'N' then 'Y'
+            end
+        WHERE
+            USER_ID = #{userId}
+        AND
+            CALENDAR_ID = #{calendarId}
+    </update>
+
+    <select id="getBookmarkList" resultType="BookmarkInfo">
+        SELECT
+            BOOKMARK_ID
+            , USER_ID
+            , BOOKMARK_CONTENT
+            , CREATE_DATE
+        FROM
+            BOOKMARK
+        WHERE
+            USER_ID = #{userId}
+    </select>
+
     <select id="getBookmark" resultType="BookmarkInfo">
         SELECT
             BOOKMARK_ID
@@ -100,6 +127,8 @@
             BOOKMARK
         WHERE
             USER_ID = #{userId}
+        AND
+            BOOKMARK_ID = #{bookmarkId}
     </select>
 
     <insert id="createBookmark">
@@ -115,20 +144,35 @@
         )
     </insert>
 
+    <delete id="deleteBookmark">
+        DELETE
+        FROM
+            BOOKMARK
+        WHERE
+            USER_ID = #{userId}
+        AND
+            BOOKMARK_ID = #{bookmarkId}
+    </delete>
+
     <insert id="bookmarkToCalendar">
         INSERT INTO CALENDAR
         (
-            USER_ID
-            , CALENDAR_DATE
-            , CALENDAR_CONTENT
-            , BOOKMARK
+            USER_ID,
+            CALENDAR_DATE,
+            CALENDAR_CONTENT,
+            BOOKMARK
         )
-        VALUES
-        (
-            #{userId}
-            , #{calendarDate}
-            , #{bookmarkContent}
-            , 'Y'
-        )
+        SELECT
+            BM.USER_ID,
+            CURRENT_DATE(),
+            BM.BOOKMARK_CONTENT,
+            'Y'
+        FROM
+            BOOKMARK BM
+        WHERE
+            BM.USER_ID = #{userId}
+        AND
+            BM.BOOKMARK_ID = #{bookmarkId}
+        LIMIT 1;
     </insert>
 </mapper>

@@ -12,7 +12,7 @@ import java.sql.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserInfo {
+public class UserTokenInfo {
     private String userId;
     private String email;
     private String password;
@@ -22,4 +22,6 @@ public class UserInfo {
     private String calendarType;
     private String gender;
     private Date registDate;
+
+    private String token;
 }
