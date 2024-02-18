@@ -17,8 +17,8 @@ public class UserTokenInfo {
     private String email;
     private String password;
     private String name;
-    private Integer birthDate;
-    private Integer birthTime;
+    private String birthDate;
+    private String birthTime;
     private String calendarType;
     private String gender;
     private Date registDate;
