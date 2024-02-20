@@ -104,6 +104,9 @@ public class UserService {
 
     @Transactional
     public boolean deleteUser(UserInfo user){
+        // user와 연결되어있는 모든 db값 삭제
+        userMapper.deleteUserCalendar(user);
+        userMapper.deleteUserBookmark(user);
         int result = userMapper.deleteUser(user);
         if(result<1){
             return false;

@@ -104,11 +104,27 @@
             EMAIL = #{email}
     </update>
 
+    <delete id="deleteUserCalendar">
+        DELETE
+        FROM
+            CALENDAR
+        WHERE
+            USER_ID = #{userId}
+    </delete>
+
+    <delete id="deleteUserBookmark">
+        DELETE
+        FROM
+            BOOKMARK
+        WHERE
+            USER_ID = #{userId}
+    </delete>
+
     <delete id="deleteUser">
         DELETE
         FROM
             USERINFO
         WHERE
-            EMAIL = #{email}
+            USER_ID = #{userId}
     </delete>
 </mapper>

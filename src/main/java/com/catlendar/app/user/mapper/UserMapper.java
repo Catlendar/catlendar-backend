@@ -17,5 +17,9 @@ public interface UserMapper {
     int updateUser(UserInfo user);
     PasswordInfo selectPassword(PasswordInfo passwordInfo);
     int updatePassword(PasswordInfo passwordInfo);
+
+
+    int deleteUserCalendar(UserInfo user);
+    int deleteUserBookmark(UserInfo user);
     int deleteUser(UserInfo user);
 }
