@@ -164,7 +164,7 @@
         )
         SELECT
             BM.USER_ID,
-            CURRENT_DATE(),
+            #{targetDate},
             BM.BOOKMARK_CONTENT,
             'Y'
         FROM
