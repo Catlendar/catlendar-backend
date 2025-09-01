@@ -1,40 +1,52 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '11'
+    sourceCompatibility = '11'
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	all {
-		//logback과의 충돌 방지
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    all {
+        // logback과의 충돌 방지
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-	implementation 'io.jsonwebtoken:jjwt:0.9.1'
-	implementation group: 'org.bgee.log4jdbc-log4j2', name:'log4jdbc-log4j2-jdbc4.1', version: '1.16'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+implementation 'com.oracle.database.jdbc:ojdbc8:19.8.0.0'
+    
+    // MariaDB JDBC 드라이버 의존성 추가
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.4'
+
+    // 로그와 관련된 의존성은 log4jdbc 대신 log4j2만 사용
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+    // Lombok 의존성
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 기존 Oracle JDBC 드라이버 의존성 제거
+    // implementation 'com.oracle.database.jdbc:ojdbc8:19.8.0.0' // 이 줄은 제거했습니다.
+
+    // MariaDB 사용을 위한 설정이므로 Oracle 의존성은 제거되었습니다.
 }

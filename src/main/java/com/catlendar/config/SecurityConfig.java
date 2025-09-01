@@ -52,6 +52,9 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://catlendar.netlify.app");
+        configuration.addAllowedOrigin("http://192.168.0.47:3000");
+        configuration.addAllowedOrigin("http://192.168.0.47:3000/");
+        configuration.addAllowedOrigin("https://192.168.0.47:3000");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
